@@ -1,7 +1,7 @@
-package cuoiKy.model.BO;
+package ex03.model.BO;
 
-import cuoiKy.model.DAO.ApartmentDAO;
-import cuoiKy.model.bean.Apartment;
+import ex03.model.DAO.ApartmentDAO;
+import ex03.model.bean.Apartment;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;

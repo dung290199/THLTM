@@ -1,6 +1,6 @@
-package cuoiKy.model.DAO;
+package ex03.model.DAO;
 
-import cuoiKy.model.bean.Employee;
+import ex03.model.bean.Employee;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

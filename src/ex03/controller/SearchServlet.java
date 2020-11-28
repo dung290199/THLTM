@@ -1,9 +1,9 @@
-package cuoiKy.controller;
+package ex03.controller;
 
-import cuoiKy.model.BO.ApartmentService;
-import cuoiKy.model.BO.EmployeeService;
-import cuoiKy.model.bean.Apartment;
-import cuoiKy.model.bean.Employee;
+import ex03.model.BO.ApartmentService;
+import ex03.model.BO.EmployeeService;
+import ex03.model.bean.Apartment;
+import ex03.model.bean.Employee;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

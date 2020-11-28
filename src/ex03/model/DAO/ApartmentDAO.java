@@ -1,6 +1,6 @@
-package cuoiKy.model.DAO;
+package ex03.model.DAO;
 
-import cuoiKy.model.bean.Apartment;
+import ex03.model.bean.Apartment;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.PreparedStatement;

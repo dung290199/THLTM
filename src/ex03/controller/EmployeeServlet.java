@@ -1,29 +1,26 @@
-package cuoiKy.controller;
+package ex03.controller;
 
-import cuoiKy.model.BO.ApartmentService;
-import cuoiKy.model.bean.Apartment;
+import ex03.model.BO.EmployeeService;
+import ex03.model.bean.Employee;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "ApartmentServlet", urlPatterns = "/apartments")
-public class ApartmentServlet extends HttpServlet {
+@WebServlet(name = "EmployeeServlet", urlPatterns = "/employees")
+public class EmployeeServlet extends HttpServlet {
 
-    private ApartmentService apartmentService = new ApartmentService();
+    private EmployeeService employeeService = new EmployeeService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         if(action == null){
             action = "";
@@ -31,13 +28,13 @@ public class ApartmentServlet extends HttpServlet {
         try {
             switch (action){
                 case "create":
-                    createApartment(request, response);
+                    createEmployee(request, response);
                     break;
                 case "edit":
-                    updateApartment(request, response);
+                    updateEmployee(request, response);
                     break;
                 case "delete":
-                    deleteApartment(request, response);
+                    deleteEmployee(request, response);
                     break;
                 default:
                     break;
@@ -48,8 +45,7 @@ public class ApartmentServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         if(action == null){
             action = "";
@@ -66,10 +62,10 @@ public class ApartmentServlet extends HttpServlet {
                     showDeleteForm(request, response);
                     break;
                 case "view":
-                    viewApartment(request, response);
+                    viewEmployee(request, response);
                     break;
                 default:
-                    listApartments(request, response);
+                    listEmployees(request, response);
                     break;
             }
         } catch (SQLException | ClassNotFoundException throwables) {
@@ -77,15 +73,15 @@ public class ApartmentServlet extends HttpServlet {
         }
     }
 
-    private void viewApartment(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
+    private void viewEmployee(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Apartment apartment = this.apartmentService.findById(id);
+        Employee employee = this.employeeService.findById(id);
         RequestDispatcher dispatcher;
-        if(apartment == null){
+        if(employee == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
         }else{
-            request.setAttribute("apartment", apartment);
-            dispatcher = request.getRequestDispatcher("apartment/view.jsp");
+            request.setAttribute("employee", employee);
+            dispatcher = request.getRequestDispatcher("employee/view.jsp");
         }
         try{
             dispatcher.forward(request, response);
@@ -94,16 +90,16 @@ public class ApartmentServlet extends HttpServlet {
         }
     }
 
-    private void deleteApartment(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
+    private void deleteEmployee(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Apartment apartment = this.apartmentService.findById(id);
+        Employee employee = this.employeeService.findById(id);
         RequestDispatcher dispatcher;
-        if (apartment == null){
+        if (employee == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
         }else{
-            this.apartmentService.remove(id);
+            this.employeeService.remove(id);
             try {
-                response.sendRedirect("/apartments");
+                response.sendRedirect("/employees");
             }catch (IOException e){
                 e.printStackTrace();
             }
@@ -113,13 +109,13 @@ public class ApartmentServlet extends HttpServlet {
 
     private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Apartment apartment = this.apartmentService.findById(id);
+        Employee employee = this.employeeService.findById(id);
         RequestDispatcher dispatcher;
-        if (apartment == null){
+        if (employee == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
         }else{
-            request.setAttribute("apartment", apartment);
-            dispatcher = request.getRequestDispatcher("apartment/delete.jsp");
+            request.setAttribute("employee", employee);
+            dispatcher = request.getRequestDispatcher("employee/delete.jsp");
         }
         try{
             dispatcher.forward(request, response);
@@ -127,42 +123,42 @@ public class ApartmentServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
-    private void updateApartment(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, UnsupportedEncodingException {
-        int idpb = Integer.parseInt(request.getParameter("id"));
-        String name = new String(request.getParameter("name").getBytes("ISO-8859-1"),"UTF-8");
-        String description = new String(request.getParameter("description").getBytes("ISO-8859-1"),"UTF-8");
-
-        Apartment apartment = this.apartmentService.findById(idpb);
-        RequestDispatcher dispatcher;
-        if(apartment == null){
-            dispatcher = request.getRequestDispatcher("error-404.jsp");
-        }else{
-            apartment.setId(idpb);
-            apartment.setName(name);
-            apartment.setDescription(description);
-            this.apartmentService.update(idpb, apartment);
-            request.setAttribute("apartment", apartment);
-            request.setAttribute("message", "Apartment information was updated");
-            request.setCharacterEncoding("utf-8");
-            dispatcher = request.getRequestDispatcher("apartment/edit.jsp");
-        }
-        try{
-            dispatcher.forward(request, response);
-        }catch (ServletException | IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, UnsupportedEncodingException {
+//ISO-8859-1
+    private void updateEmployee(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, UnsupportedEncodingException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Apartment apartment = this.apartmentService.findById(id);
+        String name = new String(request.getParameter("name").getBytes("ISO-8859-1"), "UTF-8");
+        int idpb = Integer.parseInt(request.getParameter("idpb"));
+        String address = new String(request.getParameter("address").getBytes("ISO-8859-1"), "UTF-8");
+
+        Employee employee = this.employeeService.findById(id);
         RequestDispatcher dispatcher;
-        if (apartment == null){
+        if(employee == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
         }else{
-            request.setAttribute("apartment", apartment);
-            dispatcher = request.getRequestDispatcher("apartment/edit.jsp");
+            employee.setName(name);
+            employee.setIdpb(idpb);
+            employee.setAddress(address);
+            this.employeeService.update(id, employee);
+            request.setAttribute("employee", employee);
+            request.setAttribute("message", "Employee information was updated");
+            dispatcher = request.getRequestDispatcher("employee/edit.jsp");
+        }
+        try{
+            dispatcher.forward(request, response);
+        }catch (ServletException | IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Employee employee = this.employeeService.findById(id);
+        RequestDispatcher dispatcher;
+        if (employee == null){
+            dispatcher = request.getRequestDispatcher("error-404.jsp");
+        }else{
+            request.setAttribute("employee", employee);
+            dispatcher = request.getRequestDispatcher("employee/edit.jsp");
         }
         try{
             dispatcher.forward(request, response);
@@ -172,7 +168,7 @@ public class ApartmentServlet extends HttpServlet {
     }
 
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("apartment/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("employee/create.jsp");
         try{
             dispatcher.forward(request,response);
         }catch(ServletException | IOException e){
@@ -180,25 +176,26 @@ public class ApartmentServlet extends HttpServlet {
         }
     }
 
-    public void listApartments(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
-        List<Apartment> apartments = this.apartmentService.findAll();
-        request.setAttribute("apartments", apartments);
+    public void listEmployees(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException {
+        List<Employee> employees = this.employeeService.findAll();
+        request.setAttribute("employees", employees);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("apartment/list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("employee/list.jsp");
         try {
             dispatcher.forward(request,response);
         }catch(ServletException | IOException e){
             e.printStackTrace();
         }
     }
-    private void createApartment(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, UnsupportedEncodingException {
+    private void createEmployee(HttpServletRequest request, HttpServletResponse response) throws SQLException, ClassNotFoundException, UnsupportedEncodingException {
         String name = new String(request.getParameter("name").getBytes("ISO-8859-1"), "UTF-8");
-        String description = new String(request.getParameter("description").getBytes("ISO-8859-1"), "UTF-8");
+        int idpb = Integer.parseInt(request.getParameter("idpb"));
+        String address = new String(request.getParameter("address").getBytes("ISO-8859-1"), "UTF-8");
 
-        Apartment apartment = new Apartment(name, description);
-        this.apartmentService.create(apartment);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("apartment/create.jsp");
-        request.setAttribute("message", "New apartment was created");
+        Employee employee = new Employee(name, idpb, address);
+        this.employeeService.create(employee);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("employee/create.jsp");
+        request.setAttribute("message", "New employee was created");
         try{
             dispatcher.forward(request, response);
         }catch (ServletException | IOException e){

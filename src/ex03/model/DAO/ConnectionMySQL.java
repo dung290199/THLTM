@@ -1,4 +1,4 @@
-package cuoiKy.model.DAO;
+package ex03.model.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

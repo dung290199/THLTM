@@ -1,7 +1,7 @@
-package cuoiKy.model.BO;
+package ex03.model.BO;
 
-import cuoiKy.model.DAO.EmployeeDAO;
-import cuoiKy.model.bean.Employee;
+import ex03.model.DAO.EmployeeDAO;
+import ex03.model.bean.Employee;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

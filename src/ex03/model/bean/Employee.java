@@ -1,4 +1,4 @@
-package cuoiKy.model.bean;
+package ex03.model.bean;
 
 public class Employee {
     private int id;
