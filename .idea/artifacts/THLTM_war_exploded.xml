@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="THLTM:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/THLTM_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="THLTM" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jstl-1.2" />
+          <element id="library" level="project" name="mysql-connector-java-8.0.21" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="THLTM/web/Web" />
+    </root>
+  </artifact>
+</component>

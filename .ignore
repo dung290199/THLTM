@@ -1,2 +1,5 @@
-out
-/web/WEB-INF/libs
+out/
+*.jar
+*.iml
+.idea/
+lib/
